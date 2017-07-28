@@ -37,11 +37,11 @@ void _vector_grow(vector_t* vec);
 
 //insert element at end
 //grows if necessary
-void vector_insert(vector_t* vec);
+void vector_insert(vector_t* vec, int element);
 
 //insert element at index i, and shift other elements over by one
 //grows if necessary
-void vector_insert_at(vector_t* vec, int i);
+void vector_insert_at(vector_t* vec, int element, int i);
 
 //remove last element and return, shifts other elements over
 int vector_remove(vector_t* vec);

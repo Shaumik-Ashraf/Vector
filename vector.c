@@ -123,13 +123,14 @@ int vector_remove(vector_t* vec) {
 int vector_remove_at(vector_t* vec, int i) {
 	
 	int ret;
-	int j, temp, to_shift;
+	int j;
 	
 	ret = vec->array[i];
 	for(j=i; j<array->length-1; j++) {
-		vec->array //!!!!!!!! CONTINUE HERE
+		vec->array[j] = vec->array[j+1];
 	}
 	
+	return(ret);
 }
 
  

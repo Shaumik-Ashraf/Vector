@@ -3,7 +3,8 @@
 #include<stdio.h>
 #include<stdlib.h>
  
-
+#include"vector.h"
+ 
 //========functions============
 
 //prints error_msg to stderr and exits program
@@ -47,7 +48,7 @@ void vector_put(vector_t* vec) {
 	
 	int i;
 	
-	for(i=0; i<length; i++) {
+	for(i=0; i<vec->length; i++) {
 		printf("%i\n", vec->array[i]);
 	}
 	
@@ -126,7 +127,7 @@ int vector_remove_at(vector_t* vec, int i) {
 	int j;
 	
 	ret = vec->array[i];
-	for(j=i; j<array->length-1; j++) {
+	for(j=i; j<vec->length-1; j++) {
 		vec->array[j] = vec->array[j+1];
 	}
 	

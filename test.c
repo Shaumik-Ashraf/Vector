@@ -12,8 +12,10 @@ int main(void) {
 	int i;
 	
 	v = new_vector(2);
+	printf("Vector initialized\n");
 	
 	for(i=0; i<5; i++) {
+		printf("Enter an int:");
 		fgets(buf, 255, stdin);
 		sscanf(buf, "%i", &x);
 		

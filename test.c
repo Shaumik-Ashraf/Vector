@@ -2,25 +2,25 @@
 
 #include<stdio.h>
 
-#include"vector.h"
+#include"vector_d.h"
 
 int main(void) {
 	
 	vector_t* v;
 	char buf[256];
-	int x;
+	double x;
 	int i;
 	
 	v = new_vector(2);
 	printf("Vector initialized\n");
 	
 	for(i=0; i<5; i++) {
-		printf("Enter an int:");
+		printf("Enter an int/double:");
 		fgets(buf, 255, stdin);
-		sscanf(buf, "%i", &x);
+		sscanf(buf, "%lf", &x);
 		
 		vector_insert(v, x);
-		printf("%i inserted\n", x);
+		printf("%lf inserted\n", x);
 		
 	}
 	printf("================\n");

@@ -13,7 +13,7 @@ void _vector_error(char* error_msg) {
 }
 
 //constructors
-vector_t* new_vector(double init_cap) {
+vector_t* new_vector(int init_cap) {
 	
 	vector_t* ret;
 	
@@ -47,7 +47,7 @@ void vector_put(vector_t* vec) {
 	int i;
 	
 	for(i=0; i<vec->length; i++) {
-		printf("%d\n", vec->array[i]);
+		printf("%lf\n", vec->array[i]);
 	}
 	
 }

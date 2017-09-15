@@ -1,6 +1,8 @@
 //test.c
 
 #include<stdio.h>
+#include<stdio.h>
+#include<stdio.h>
 
 #include"vector_d.h"
 

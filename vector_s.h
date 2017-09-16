@@ -23,6 +23,6 @@ void vector_removelast(vector_t* vec);
 
 void vector_put(vector_t* vec);
 
-void vector_grow(vector_t* vec);
+void _vector_grow(vector_t* vec);
 
 #endif

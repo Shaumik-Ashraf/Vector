@@ -1,3 +1,8 @@
+#include<stdio.h>
+#include"vector_s.h"
+#include<stdlib.h>
+#include<string.h>
+
 
 static char* new_string(char* s) {
 	char* ret;

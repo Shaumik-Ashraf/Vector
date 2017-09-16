@@ -17,7 +17,7 @@ vector_t* new_vector(int init_cap);
 
 void vector_kill(vector_t* vec);
 
-void vector_add(vector_t* vec, char* element);
+void vector_insert(vector_t* vec, char* element);
 
 void vector_removelast(vector_t* vec);
 

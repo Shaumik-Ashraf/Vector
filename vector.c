@@ -4,7 +4,24 @@
 #include<stdlib.h>
  
 #include"vector.h"
- 
+
+//=========helper================ 
+void print_int(void* x) {
+	int* p = (int*)x;
+	printf("%i", *p);
+}
+
+void print_double(void* x) {
+	double* p = (double*)x;
+	printf("%lf", *p);	
+}
+
+void print_string(void* x) {
+	char* p = (char*)x;
+	printf("%s", p);	
+} 
+
+
 //========functions============
 
 //prints error_msg to stderr and exits program
@@ -15,7 +32,7 @@ void _vector_error(char* error_msg) {
 }
 
 //constructors
-vector_t* new_vector(int init_cap) {
+vector_t* new_vector(int init_cap, void (*print_f)(void* x)) {
 	
 	vector_t* ret;
 	
@@ -31,6 +48,8 @@ vector_t* new_vector(int init_cap) {
 		//free(ret);
 		_vector_error("malloc failed for array");
 	}
+	
+	ret->print = print_f;
 	
 	return(ret);
 }
@@ -49,7 +68,8 @@ void vector_put(vector_t* vec) {
 	int i;
 	
 	for(i=0; i<vec->length; i++) {
-		printf("%i\n", vec->array[i]);
+		vec->print( &(vec->array[i]) );
+		printf("\n");
 	}
 	
 }
@@ -120,18 +140,5 @@ int vector_remove(vector_t* vec) {
 	return(ret);
 }
 
-//remove element at index i and return, shifts other elements over
-int vector_remove_at(vector_t* vec, int i) {
-	
-	int ret;
-	int j;
-	
-	ret = vec->array[i];
-	for(j=i; j<vec->length-1; j++) {
-		vec->array[j] = vec->array[j+1];
-	}
-	
-	return(ret);
-}
 
  

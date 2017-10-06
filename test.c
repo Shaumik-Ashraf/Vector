@@ -4,24 +4,25 @@
 #include<stdio.h>
 #include<stdio.h>
 
-#include"vector_s.h"
+#include"vector.h"
 
 int main(void) {
 	
 	vector_t* v;
 	char buf[256];
-	//double x;
+	int x;
 	int i;
 	
-	v = new_vector(2);
+	v = new_vector(2, &print_int);
 	printf("Vector initialized\n");
 	
 	for(i=0; i<5; i++) {
-		printf("Enter a string:");
+		printf("Enter a int:");
 		fgets(buf, 255, stdin);
+		sscanf(buf, "%i", &x);
 		
-		vector_insert(v, buf);
-		printf("%s inserted\n", buf);
+		vector_insert(v, x);
+		printf("%i inserted\n", x);
 		
 	}
 	printf("================\n");

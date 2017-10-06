@@ -15,8 +15,18 @@
 typedef struct {
 	int* array;
 	size_t capacity;
-	size_t length; 
+	size_t length;
+	void (*print)(void* x);
 } vector_t;
+ 
+//======helper functions=======
+void print_int(void* x);
+void print_double(void* x);
+void print_string(void* x);
+
+/* In C Code
+  v.print = &print_int;
+*/
  
 //========functions============
 
@@ -24,7 +34,7 @@ typedef struct {
 void _vector_error(char* error_msg);
 
 //constructors
-vector_t* new_vector(int init_cap);
+vector_t* new_vector(int init_cap, void (*print_f)(void* x));
 
 //destroyer
 void vector_kill(vector_t* vec);
@@ -39,22 +49,9 @@ void _vector_grow(vector_t* vec);
 //grows if necessary
 void vector_insert(vector_t* vec, int element);
 
-//insert element at index i, and shift other elements over by one
-//grows if necessary
-void vector_insert_at(vector_t* vec, int element, int i);
-
 //remove last element and return, shifts other elements over
-int vector_remove(vector_t* vec);
+int vector_remove_last(vector_t* vec);
 
-//remove element at index i and return, shifts other elements over
-int vector_remove_at(vector_t* vec, int i);
-
-/** more functions for later
-vector_scale
-vector_add
-vector_copy
-
- */
 
 #endif 
  

@@ -46,6 +46,8 @@ vector_t* new_vector(int init_cap) {
 
 void vector_kill(vector_t* vec) {
 	
+	int i;
+	
 	for (i=0; i<(vec->length); i++) {
 		free(vec->array[i]);
 	}		

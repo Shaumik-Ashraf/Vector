@@ -2,6 +2,7 @@
 
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
  
 #include"vector.h"
 
@@ -21,6 +22,21 @@ void print_string(void* x) {
 	printf("%s", p);	
 } 
 
+//returns size of element (not pointer!)
+unsigned int size_int(void* x) {
+	return( sizeof(int) );
+}
+
+//returns size of element (not pointer!)
+unsigned int size_double(void* x) {
+	return( sizeof(double) );
+}
+
+//returns size of element (not pointer!)
+unsigned int size_string(void* x) {
+	return( strlen((char*)x)+1 );
+}
+
 
 //========functions============
 
@@ -32,7 +48,7 @@ void _vector_error(char* error_msg) {
 }
 
 //constructors
-vector_t* new_vector(int init_cap, void (*print_f)(void* x)) {
+vector_t* new_vector(int init_cap, void (*print_f)(void* x), unsigned int (*size_f)(void*)) {
 	
 	vector_t* ret;
 	
@@ -43,13 +59,14 @@ vector_t* new_vector(int init_cap, void (*print_f)(void* x)) {
 	
 	(*ret).length = 0;
 	ret->capacity = init_cap;
-	ret->array = (int*)malloc( init_cap*sizeof(int) );
+	ret->array = (int*)malloc( init_cap*size_f() );
 	if( ret->array==NULL ) {
 		//free(ret);
 		_vector_error("malloc failed for array");
 	}
 	
 	ret->print = print_f;
+	ret->size = size_f;
 	
 	return(ret);
 }
@@ -57,6 +74,10 @@ vector_t* new_vector(int init_cap, void (*print_f)(void* x)) {
 //destroyer
 void vector_kill(vector_t* vec) {
 	
+	while( vec->length ) {
+		free( vec->array[vec->length] );
+		vec->length--;
+	}
 	free(vec->array);
 	free(vec);
 	
@@ -79,65 +100,40 @@ void _vector_grow(vector_t* vec) {
 	
 	int new_cap = vec->capacity * 2;
 	
-	vec->array = (int*)realloc(vec->array, new_cap*sizeof(int));
+	vec->array = (int*)realloc(vec->array, new_cap*sizeof(void*));
 	if( vec->array == NULL ) {
 		_vector_error("grow failed");
 	}
 	
-	vec->capacity = new_cap;
-	
+	vec->capacity = new_cap;	
 }
 
 //insert element at end
 //grows if necessary
-void vector_insert(vector_t* vec, int element) {
+void vector_insert(vector_t* vec, void* element) {
+	
+	void* copy;
 	
 	if( vec->length == vec->capacity ) {
 		_vector_grow(vec);
 	}
 	
-	//arr[i] = 5;
-	vec->array[vec->length] = element;
+	copy = malloc( vec->size(element) );
+	memcpy(copy, element, vec->size(element));
+	
+	vec->array[vec->length] = copy;
 	vec->length++;
 }
+	
 
-//insert element at index i, and shift other elements over by one
-//grows if necessary
-//note: i<length must be true
-void vector_insert_at(vector_t* vec, int element, int i) {
+//remove and free last element
+void vector_remove_last(vector_t* vec) {
+	void* tofree;
 	
-	int temp;
-	int j;
-	int to_insert;
-	
-	if( vec->length == vec->capacity ) {
-		_vector_grow(vec);
-	}
-	
-	if( vec->length==0 ) {
-		vector_insert(vec, element);
-	}
-	else {
-		to_insert = element;
-		for(j=i; j<vec->length; j++) {
-			temp = vec->array[j];
-			vec->array[j] = to_insert;
-			to_insert = temp;
-		}
-		vec->array[j] = to_insert;
-	}
-	
-}
-
-//remove last element and return,
-int vector_remove(vector_t* vec) {
-	
-	int ret;
-	
-	ret = vec->array[vec->length];
+	tofree = vec->array[vec->length];
 	vec->length--;
 	
-	return(ret);
+	free(tofree);
 }
 
 

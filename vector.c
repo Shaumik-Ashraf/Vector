@@ -59,7 +59,7 @@ vector_t* new_vector(int init_cap, void (*print_f)(void* x), unsigned int (*size
 	
 	(*ret).length = 0;
 	ret->capacity = init_cap;
-	ret->array = (int*)malloc( init_cap*size_f() );
+	ret->array = (void**)malloc( init_cap*sizeof(void*) );
 	if( ret->array==NULL ) {
 		//free(ret);
 		_vector_error("malloc failed for array");
@@ -75,6 +75,7 @@ vector_t* new_vector(int init_cap, void (*print_f)(void* x), unsigned int (*size
 void vector_kill(vector_t* vec) {
 	
 	while( vec->length ) {
+		printf("freed an element\n");
 		free( vec->array[vec->length] );
 		vec->length--;
 	}
@@ -89,7 +90,7 @@ void vector_put(vector_t* vec) {
 	int i;
 	
 	for(i=0; i<vec->length; i++) {
-		vec->print( &(vec->array[i]) );
+		vec->print( vec->array[i] );
 		printf("\n");
 	}
 	
@@ -100,7 +101,7 @@ void _vector_grow(vector_t* vec) {
 	
 	int new_cap = vec->capacity * 2;
 	
-	vec->array = (int*)realloc(vec->array, new_cap*sizeof(void*));
+	vec->array = (void**)realloc(vec->array, new_cap*sizeof(void*));
 	if( vec->array == NULL ) {
 		_vector_error("grow failed");
 	}

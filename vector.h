@@ -13,7 +13,7 @@
  
 //======type decleration======
 typedef struct {
-	int* array;
+	void** array;
 	size_t capacity;
 	size_t length;
 	void (*print)(void* x);
@@ -35,9 +35,9 @@ void print_int(void* x);
 void print_double(void* x);
 void print_string(void* x);
 
-unsigned int size_int(void);
-unsigned int size_double(void);
-unsigned int size_string(void);
+unsigned int size_int(void*);
+unsigned int size_double(void*);
+unsigned int size_string(void*);
 
 /* In C Code
   v.print = &print_int;

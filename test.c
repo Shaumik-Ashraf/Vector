@@ -8,26 +8,54 @@
 
 int main(void) {
 	
-	vector_t* v;
+	vector_t* vec1;
+	vector_t* vec2;
+	vector_t* vec3;
 	char buf[256];
-	int x;
+	int ctr;
 	int i;
+	double d;
 	
-	v = new_vector(2, &print_int);
-	printf("Vector initialized\n");
+	vec1 = new_vector(2, &print_int, &size_int);
+	vec2 = new_vector(2, &print_double, &size_double);
+	vec3 = new_vector(2, &print_string, &size_string);
+	printf("Vectors all initialized!\n");
 	
-	for(i=0; i<5; i++) {
-		printf("Enter a int:");
+	for(ctr=0; ctr<3; ctr++) {
+		printf("Enter an int:");
 		fgets(buf, 255, stdin);
-		sscanf(buf, "%i", &x);
+		sscanf(buf, "%i", &i);
 		
-		vector_insert(v, x);
-		printf("%i inserted\n", x);
-		
+		vector_insert(vec1, &i);
 	}
-	printf("================\n");
-	vector_put(v);
 	
-	vector_kill(v);
+	for(ctr=0; ctr<3; ctr++) {
+		printf("Enter a double:");
+		fgets(buf, 255, stdin);
+		sscanf(buf, "%lf", &d);
+		
+		vector_insert(vec2, &d);
+	}
+	
+	for(ctr=0; ctr<3; ctr++) {
+		memset(buf, 0, 255);
+		printf("Enter a string:");
+		fgets(buf, 255, stdin);
+		
+		vector_insert(vec3, buf);
+	}
+	
+	printf("================\n");
+	vector_put(vec1);
+	vector_put(vec2);
+	vector_put(vec3);
+	
+	printf("================\n");
+	vector_kill(vec1);
+	vector_kill(vec2);
+	vector_kill(vec3);
+	
+	printf("Vectors freed!\n");
+	
 	return(0);
 }

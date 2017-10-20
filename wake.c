@@ -181,7 +181,6 @@ static int is_recipe_line(char* line) {
 	return( is_set(line, RECIPE_CHARSET) && !is_set(line, BLANK_CHARSET) );
 }
 
-
 static int get_file_size(char* path) {
 	FILE* fp = fopen(path, "r");
 	int ret;
@@ -236,7 +235,7 @@ int main(int argc, char** argv) {
 
 	recipe = new_list();
 	filesize = get_file_size(filenam);
-	//printf("filesize: %i\n", filesize);
+	printf("filesize: %i\n", filesize);
 	memset(filebuf, 0, 5000*sizeof(char));
 	memset(linebuf, 0, 256*sizeof(char));
 	
@@ -244,15 +243,15 @@ int main(int argc, char** argv) {
 	fp = fopen(filenam, "r");
 	fread(filebuf, 4999, sizeof(char), fp);
 	printf("wake: file loaded to buffer\n");
-	//printf("file buf:\n%s\n\n", filebuf);
+	printf("file buf:\n%s\n\n", filebuf);
 	fclose(fp);
 	
 	//copy char by char here!!
 	for(i=0, j=0; i<filesize; i++) {
-		//printf("at: %c\n", filebuf[i]);
+		printf("at: %c\n", filebuf[i]);
 		if( filebuf[i]=='\n' ) {
 			linebuf[j] = '\0';
-			//printf("testing line: %s\n", linebuf);
+			printf("testing line: %s\n", linebuf);
 			if( is_recipe_line(linebuf) ) {
 				add_string(recipe, linebuf);
 			}
@@ -272,7 +271,6 @@ int main(int argc, char** argv) {
 		printf("wake: command extracted: %s\n", get_string(recipe,i));
 	}
 	
-	//free_list(recipe); return(0);
 	//*/
 	
 	for(i=recipe->len-1; i+1; i--) {

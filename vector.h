@@ -67,6 +67,8 @@ void vector_insert(vector_t* vec, void* element);
 //remove last element and return, shifts other elements over
 void vector_remove_last(vector_t* vec);
 
+///TODO
+void vector_sort(vector_t* vec);
 
 #endif 
  

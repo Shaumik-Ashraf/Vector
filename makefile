@@ -6,3 +6,7 @@ test.o: test.c vector.h
 
 vector.o: vector.c vector.h
 	gcc -c vector.c
+	
+	
+	
+

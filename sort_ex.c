@@ -1,10 +1,62 @@
 //sort example
-//BUG
 
 #include<stdio.h>
 #include<stdlib.h>  //contains qsort()
 #include<time.h>
+#include<string.h>  //contains int strcmp(char* s1, char* s2)
 
+//sorting strings example
+
+char* new_string(char* s);
+int my_strcmp(void* a, void* b);
+
+int main(void) {
+	
+	int len = 5;
+	char *str_array[len];
+	int (*comparer)(void* a, void* b);
+	int i;
+	
+	//create the string array
+	str_array[0] = new_string("i");
+	str_array[1] = new_string("fuqd");
+	str_array[2] = new_string("up");
+	str_array[3] = new_string("my");
+	str_array[4] = new_string("exam");
+	
+	//qsort()
+	comparer = &my_strcmp;
+	qsort(str_array, len, sizeof(char*), comparer);
+	
+	//print string array
+	for(i=0; i<len; i++) {
+		printf("%s\n", str_array[i]);
+	}
+	
+	//destroy string array
+	for(i=0; i<len; i++) {
+		free(str_array[i]);
+	}
+	
+	return(0);
+}
+
+char* new_string(char* s) {
+	char* ret = malloc(strlen(s)+1);
+	if( !ret ) {
+		fprintf(stderr, "Error\n");
+		exit(1);
+	}
+	strncpy(ret, s, strlen(s)+1);
+	
+	return(ret);
+}
+
+int my_strcmp(void* a, void* b) {
+	return( strcmp( *(char**)a, *(char**)b ) );
+}
+
+/* Sorting double example
 int dblcmp(void* a, void* b);
 
 int main(int argc, char** argv) {
@@ -36,6 +88,7 @@ int main(int argc, char** argv) {
 }
 
 int dblcmp(void* a, void* b) {
+
 	double d1 = *((double*)a);
 	double d2 = *((double*)b);
 
@@ -49,3 +102,4 @@ int dblcmp(void* a, void* b) {
 		return(-1);
 	}
 }
+*/
